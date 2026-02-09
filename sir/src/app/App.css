@@ -1,0 +1,24 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  height: 50px;
+  background-color: #ffe391;
+  align-items: center;
+  padding: 5px 150px;
+  justify-content: space-between;
+}
+
+.footer {
+  display: flex;
+  height: 100px;
+  background-color: #fff4d3;
+  align-items: center;
+  padding: 5px 150px
+}
+
