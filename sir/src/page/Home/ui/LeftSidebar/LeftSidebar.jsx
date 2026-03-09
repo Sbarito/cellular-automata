@@ -1,7 +1,8 @@
 import Statistics from './ui/Statistics';
 import Parameters from './ui/Parameters';
+import Time from './ui/Time';
 
-const LeftSidebar = ({sCount, iCount, rCount}) => {
+const LeftSidebar = ({sCount, iCount, rCount, day, setDay}) => {
     return (
         <div style={{ 
             width: '500px', 
@@ -17,6 +18,7 @@ const LeftSidebar = ({sCount, iCount, rCount}) => {
               <div style={{ fontWeight: 'bold', fontSize: '16px' }}>Настройки сетки</div>
               <Statistics sCount={sCount} iCount={iCount} rCount={rCount}/>
               <Parameters/>
+              <Time day={day} setDay={setDay}/>
             </div>
           </div>
     )

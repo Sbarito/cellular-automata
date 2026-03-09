@@ -1,6 +1,6 @@
 import Graf from "./ui/Graf";
 
-const RightSidebar = ({sCount}) => {
+const RightSidebar = ({day}) => {
     return (
         <div style={{ 
             width: '100%', 
@@ -20,7 +20,7 @@ const RightSidebar = ({sCount}) => {
                 justifyContent: 'center',
                 position: 'relative'
             }}>
-                <Graf sCount={sCount}/>
+                <Graf day={day}/>
             </div>
         </div>
     )

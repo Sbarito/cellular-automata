@@ -6,15 +6,25 @@ import FieldPanel from './ui/FieldPanel/FieldPanel';
 
 const Home = () => {
     const [gridSize, setGridSize] = useState(20);
+    const [day, setDay] = useState(30)
     const [grid, setGrid] = useState(Array(20).fill().map(() => Array(20).fill('S')));
     const [isRunning, setIsRunning] = useState(false);
     const { sCount, iCount, rCount } = countCells(grid)
 
     return (<div style={{ padding: '5px 150px' }}>
         <div style={{ display: 'flex', gap: '30px', marginBottom: '20px' }}>
-          <LeftSidebar sCount={sCount} iCount={iCount} rCount={rCount} setIsRunning={setIsRunning}/>
+          <LeftSidebar 
+            sCount={sCount} 
+            iCount={iCount} 
+            rCount={rCount} 
+            setIsRunning={setIsRunning}
+            day={day}
+            setDay={setDay}
+            />
           <FieldPanel gridSize={gridSize} grid={grid} isRunning={isRunning} setGrid={setGrid} setIsRunning={setIsRunning}/>
-          <RightSidebar sCount={sCount}/>
+          <RightSidebar 
+            day={day}
+            />
         </div>
         <div style={{ marginTop: '20px' }}>
           <div>

@@ -1,12 +1,10 @@
 import { generateTicks } from "../utils/generateTicks";
 
-const Graf = ({sCount}) => {
-    const maxY = sCount
-    const maxX = 200
-
+const Graf = ({day}) => {
+    const maxY = 400
+    const maxX = day
     const yTicks = generateTicks(maxY);
     const xTicks = generateTicks(maxX);
-    
     const yPositions = [650, 530, 410, 290, 170, 50];
     const xPositions = [50, 150, 250, 350, 450, 550];
     
@@ -60,55 +58,53 @@ const Graf = ({sCount}) => {
             
             {yTicks.map((value, index) => {
                 const y = yPositions[index];
-                if (value === 0) return null;
+                if (y === 650 || y === 50) return null;
                 
                 return (
                     <g key={`y-${index}`}>
-                        {value !== maxY && (
-                            <>
-                                <line 
-                                    x1="45" y1={y} 
-                                    x2="50" y2={y} 
-                                    stroke="#666" 
-                                    strokeWidth="1" 
-                                />
-                                <text 
-                                    x="35" y={y} 
-                                    textAnchor="end" 
-                                    dominantBaseline="middle"
-                                    fontSize="12"
-                                    fill="#666"
-                                >
-                                    {value}
-                                </text>
-                            </>
-                        )}
+                        <>
+                            <line 
+                                x1="45" y1={y} 
+                                x2="50" y2={y} 
+                                stroke="#666" 
+                                strokeWidth="1" 
+                            />
+                            <text 
+                                x="35" y={y} 
+                                textAnchor="end" 
+                                dominantBaseline="middle"
+                                fontSize="12"
+                                fill="#666"
+                            >
+                                {value}
+                            </text>
+                        </>
                     </g>
                 );
             })}
             
             {xTicks.map((value, index) => {
                 const x = xPositions[index];
+                if (x === 50 || x === 550) return null;
+                
                 return (
                     <g key={`x-${index}`}>
-                        {value !== maxX && (
-                            <>
-                                <line 
-                                    x1={x} y1="650" 
-                                    x2={x} y2="645" 
-                                    stroke="#666" 
-                                    strokeWidth="1" 
-                                />
-                                <text 
-                                    x={x} y="665" 
-                                    textAnchor="middle" 
-                                    fontSize="12"
-                                    fill="#666"
-                                >
-                                    {value}
-                                </text>
-                            </>
-                        )}
+                        <>
+                            <line 
+                                x1={x} y1="650" 
+                                x2={x} y2="645" 
+                                stroke="#666" 
+                                strokeWidth="1" 
+                            />
+                            <text 
+                                x={x} y="665" 
+                                textAnchor="middle" 
+                                fontSize="12"
+                                fill="#666"
+                            >
+                                {value}
+                            </text>
+                        </>
                     </g>
                 );
             })}
@@ -130,4 +126,4 @@ const Graf = ({sCount}) => {
     )
 }
 
-export default Graf
+export default Graf;
