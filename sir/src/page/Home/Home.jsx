@@ -12,9 +12,9 @@ const Home = () => {
 
     return (<div style={{ padding: '5px 150px' }}>
         <div style={{ display: 'flex', gap: '30px', marginBottom: '20px' }}>
-          <LeftSidebar  sCount={sCount} iCount={iCount} rCount={rCount} setIsRunning={setIsRunning}/>
+          <LeftSidebar sCount={sCount} iCount={iCount} rCount={rCount} setIsRunning={setIsRunning}/>
           <FieldPanel gridSize={gridSize} grid={grid} isRunning={isRunning} setGrid={setGrid} setIsRunning={setIsRunning}/>
-          <RightSidebar isRunning={isRunning}/>
+          <RightSidebar sCount={sCount}/>
         </div>
         <div style={{ marginTop: '20px' }}>
           <div>

@@ -1,0 +1,133 @@
+import { generateTicks } from "../utils/generateTicks";
+
+const Graf = ({sCount}) => {
+    const maxY = sCount
+    const maxX = 200
+
+    const yTicks = generateTicks(maxY);
+    const xTicks = generateTicks(maxX);
+    
+    const yPositions = [650, 530, 410, 290, 170, 50];
+    const xPositions = [50, 150, 250, 350, 450, 550];
+    
+    return (
+        <svg width="100%" height="700" viewBox="0 0 600 700" style={{ maxWidth: '100%' }}>
+            {yPositions.map((y, index) => {
+                if (y === 650) return null;
+                return (
+                    <line 
+                        key={`grid-y-${index}`}
+                        x1="50" 
+                        y1={y} 
+                        x2="550" 
+                        y2={y} 
+                        stroke="#ccc" 
+                        strokeWidth="1" 
+                        strokeDasharray="5,5"
+                    />
+                );
+            })}
+            
+            {xPositions.map((x, index) => {
+                if (x === 50) return null; 
+                return (
+                    <line 
+                        key={`grid-x-${index}`}
+                        x1={x} 
+                        y1="50" 
+                        x2={x} 
+                        y2="650" 
+                        stroke="#ccc" 
+                        strokeWidth="1" 
+                        strokeDasharray="5,5"
+                    />
+                );
+            })}
+            
+            <line 
+                x1="50" y1="650" 
+                x2="50" y2="50" 
+                stroke="#333" 
+                strokeWidth="2" 
+            />
+            
+            <line 
+                x1="50" y1="650" 
+                x2="550" y2="650" 
+                stroke="#333" 
+                strokeWidth="2" 
+            />
+            
+            {yTicks.map((value, index) => {
+                const y = yPositions[index];
+                if (value === 0) return null;
+                
+                return (
+                    <g key={`y-${index}`}>
+                        {value !== maxY && (
+                            <>
+                                <line 
+                                    x1="45" y1={y} 
+                                    x2="50" y2={y} 
+                                    stroke="#666" 
+                                    strokeWidth="1" 
+                                />
+                                <text 
+                                    x="35" y={y} 
+                                    textAnchor="end" 
+                                    dominantBaseline="middle"
+                                    fontSize="12"
+                                    fill="#666"
+                                >
+                                    {value}
+                                </text>
+                            </>
+                        )}
+                    </g>
+                );
+            })}
+            
+            {xTicks.map((value, index) => {
+                const x = xPositions[index];
+                return (
+                    <g key={`x-${index}`}>
+                        {value !== maxX && (
+                            <>
+                                <line 
+                                    x1={x} y1="650" 
+                                    x2={x} y2="645" 
+                                    stroke="#666" 
+                                    strokeWidth="1" 
+                                />
+                                <text 
+                                    x={x} y="665" 
+                                    textAnchor="middle" 
+                                    fontSize="12"
+                                    fill="#666"
+                                >
+                                    {value}
+                                </text>
+                            </>
+                        )}
+                    </g>
+                );
+            })}
+            
+            <polygon 
+                points="45,55 50,40 55,55" 
+                fill="#333"
+            />
+            
+            <polygon 
+                points="545,645 560,650 545,655" 
+                fill="#333"
+            />
+            
+            <text x="10" y="58" fontSize="14" fill="#333">S,I,R</text>
+            <text x="550" y="666" fontSize="14" fill="#333">t</text>
+
+        </svg>
+    )
+}
+
+export default Graf

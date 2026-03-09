@@ -20,7 +20,7 @@ const Field = ({gridSize, grid, isRunning, setGrid}) => {
       switch(value) {
         case 'S': return '#4CAF50'; 
         case 'I': return '#f44336'; 
-        case 'R': return '#9C27B0';
+        case 'R': return '#01e414';
         default: return '#fff';
       }
     };

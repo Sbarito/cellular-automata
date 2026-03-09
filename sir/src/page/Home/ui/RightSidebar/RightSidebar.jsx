@@ -1,21 +1,29 @@
-const RightSidebar = ({isRunning}) => {
+import Graf from "./ui/Graf";
+
+const RightSidebar = ({sCount}) => {
     return (
         <div style={{ 
             width: '100%', 
             padding: '20px', 
-            backgroundColor: '#f5f5f5', 
-            borderRadius: '8px' ,
-          }}>
-            <h3>График будет здесь</h3>
-            <p>Место для отображения динамики модели SIR</p>
-            
-            {isRunning && (
-              <p style={{ color: '#4CAF50', fontWeight: 'bold', marginTop: '10px' }}>
-                Статус: Симуляция выполняется...
-              </p>
-            )}
-          </div>
+            backgroundColor: 'white', 
+            borderRadius: '8px',
+            minHeight: '100%'
+        }}>
+            <div style={{ 
+                width: '100%', 
+                height: '100%', 
+                backgroundColor: '#ffffff', 
+                borderRadius: '4px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative'
+            }}>
+                <Graf sCount={sCount}/>
+            </div>
+        </div>
     )
 }
 
-export default RightSidebar
+export default RightSidebar;
