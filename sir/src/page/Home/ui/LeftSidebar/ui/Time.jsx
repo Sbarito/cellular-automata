@@ -14,10 +14,14 @@ const Time = ({day, setDay}) => {
                         <label htmlFor="beta" style={{ minWidth: '60px', fontSize: '14px' }}>Количество дней:</label>
                         <input
                             id="time"
+                            type='number'
+                            step="1"
+                            min="1"
+                            max="10000"
                             value={day}
                             onChange={(e) => setDay(e.target.value)}
                             style={{
-                                width: '50px',
+                                width: '60px',
                                 padding: '6px',
                                 border: '1px solid #ccc',
                                 borderRadius: '4px',
