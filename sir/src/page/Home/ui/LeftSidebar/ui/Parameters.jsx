@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const Parameters = () => {
-    const [beta, setBeta] = useState(0.3);
-    const [gamma, setGamma] = useState(0.1);
+const Parameters = ({beta, setBeta, gamma, setGamma}) => {
     const [selectedDisease, setSelectedDisease] = useState('flu');
     const [r0, setR0] = useState(3);
     const [customMode, setCustomMode] = useState(false);

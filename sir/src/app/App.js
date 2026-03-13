@@ -1,6 +1,6 @@
 import { Home } from '../page/Home';
-import { Footer } from '../shared/Footer';
-import { Header } from '../shared/Header';
+import { Footer } from '../shared/ui/Footer';
+import { Header } from '../shared/ui/Header';
 import './App.css';
 
 function App() {
