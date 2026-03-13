@@ -44,8 +44,18 @@ const Parameters = () => {
     };
 
     const handleBetaChange = (e) => {
-        if (customMode) {
-            setBeta(parseFloat(e.target.value));
+        const value = e.target.value;
+        
+        // Если поле пустое, устанавливаем значение по умолчанию или 0
+        if (value === '') {
+            setBeta(''); // или другое значение по умолчанию
+            return;
+        }
+        
+        const numValue = value;
+        // Проверяем, что получилось число
+        if (!isNaN(numValue)) {
+            setBeta(numValue);
         }
     };
 
@@ -132,7 +142,6 @@ const Parameters = () => {
                             borderRadius: '4px',
                             fontSize: '14px',
                             backgroundColor: !customMode ? '#e9e9e9' : 'white',
-                            cursor: !customMode ? 'not-allowed' : 'default',
                             opacity: !customMode ? 0.7 : 1
                         }}
                     />
@@ -152,7 +161,6 @@ const Parameters = () => {
                             borderRadius: '4px',
                             fontSize: '14px',
                             backgroundColor: !customMode ? '#e9e9e9' : 'white',
-                            cursor: !customMode ? 'not-allowed' : 'default',
                             opacity: !customMode ? 0.7 : 1
                         }}
                     />
@@ -183,7 +191,6 @@ const Parameters = () => {
                             borderRadius: '4px',
                             fontSize: '14px',
                             backgroundColor:  'white',
-                            cursor:  'default',
                             opacity:  1
                         }}
                     />

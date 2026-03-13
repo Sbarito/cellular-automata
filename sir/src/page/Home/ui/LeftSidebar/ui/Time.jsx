@@ -19,7 +19,7 @@ const Time = ({day, setDay}) => {
                             min="1"
                             max="10000"
                             value={day}
-                            onChange={(e) => setDay(e.target.value)}
+                              onChange={(e) => setDay(parseInt(e.target.value, 10))}
                             style={{
                                 width: '60px',
                                 padding: '6px',
