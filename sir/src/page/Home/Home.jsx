@@ -12,6 +12,8 @@ const Home = () => {
     const [grid, setGrid] = useState(Array(20).fill().map(() => Array(20).fill('S')));
     const [isRunning, setIsRunning] = useState(false);
     const { sCount, iCount, rCount } = countCells(grid)
+    const [endSIR, setEndSIR] = useState({S: {x: 0, y: 0}, I: {x: 0, y: 0}, R: {x: 0, y: 0}});
+
 
     return (<div style={{ padding: '5px 150px' }}>
         <div style={{ display: 'flex', gap: '30px', marginBottom: '20px' }}>
@@ -26,6 +28,7 @@ const Home = () => {
             setBeta={setBeta}
             gamma={gamma}
             setGamma={setGamma}
+            endSIR={endSIR}
             />
           <FieldPanel gridSize={gridSize} grid={grid} isRunning={isRunning} setGrid={setGrid} setIsRunning={setIsRunning}/>
           <RightSidebar 
@@ -36,6 +39,7 @@ const Home = () => {
             beta={beta} 
             gamma={gamma}
             emulation={isRunning}
+            setEndSIR={setEndSIR}
             />
         </div>
         <div style={{ marginTop: '20px' }}>

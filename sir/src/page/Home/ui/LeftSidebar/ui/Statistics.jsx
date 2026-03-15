@@ -1,4 +1,4 @@
-const Statistics = ({sCount, iCount, rCount}) => {
+const Statistics = ({sCount, iCount, rCount, days}) => {
     return (
             <div style={{ 
                 marginTop: '10px',
@@ -22,6 +22,7 @@ const Statistics = ({sCount, iCount, rCount}) => {
                     <span>{rCount}</span>
                   </div>
                 </div>
+                {days !== 0 && ( <div>за {days + 1} дней</div>)}
               </div>
     )
 }
