@@ -7,16 +7,13 @@ import TitleToField from '../Field/TitleToField';
 const FieldPanel = ({gridSize, grid, isRunning, setGrid, setIsRunning}) => {
     const handleRun = () => {
         setIsRunning(true);
-        console.log('Симуляция запущена');
     };
     const handleStop = () => {
         setIsRunning(false);
-        console.log('Симуляция остановлена');
     };
     const handleReset = () => {
         setGrid(Array(gridSize).fill().map(() => Array(gridSize).fill('S')));
         setIsRunning(false);
-        console.log('Сетка сброшена');
     };
     return (
         <div>

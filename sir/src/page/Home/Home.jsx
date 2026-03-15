@@ -3,6 +3,8 @@ import { countCells } from './utils/countCells';
 import RightSidebar from './ui/RightSidebar/RightSidebar';
 import LeftSidebar from './ui/LeftSidebar/LeftSidebar';
 import FieldPanel from './ui/FieldPanel/FieldPanel';
+import { useEffect } from "react";
+import { simulateStep } from "./utils/simulateModule";
 
 const Home = () => {
     const [beta, setBeta] = useState(0.3);
@@ -13,6 +15,29 @@ const Home = () => {
     const [isRunning, setIsRunning] = useState(false);
     const { sCount, iCount, rCount } = countCells(grid)
     const [endSIR, setEndSIR] = useState({S: {x: 0, y: 0}, I: {x: 0, y: 0}, R: {x: 0, y: 0}});
+    const [currentDay, setCurrentDay] = useState(1);
+
+    useEffect(() => {
+      if (!isRunning) return;
+
+      const interval = setInterval(() => {
+
+        setCurrentDay(prevDay => {
+          if (prevDay >= day) {
+            setIsRunning(false);   // остановить симуляцию
+            return prevDay;
+          }
+
+          setGrid(prevGrid => simulateStep(prevGrid, beta, gamma));
+
+          return prevDay + 1;
+        });
+
+      }, 500);
+
+      return () => clearInterval(interval);
+
+    }, [isRunning, beta, gamma, day]);
 
 
     return (<div style={{ padding: '5px 150px' }}>
@@ -31,7 +56,7 @@ const Home = () => {
             endSIR={endSIR}
             />
           <FieldPanel gridSize={gridSize} grid={grid} isRunning={isRunning} setGrid={setGrid} setIsRunning={setIsRunning}/>
-          <RightSidebar 
+          {/* <RightSidebar 
             day={day}
             s0={sCount} 
             i0={iCount} 
@@ -40,7 +65,7 @@ const Home = () => {
             gamma={gamma}
             emulation={isRunning}
             setEndSIR={setEndSIR}
-            />
+            /> */}
         </div>
         <div style={{ marginTop: '20px' }}>
           <div>
