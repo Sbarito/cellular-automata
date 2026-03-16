@@ -7,8 +7,12 @@ export function classicSIR(S0, I0, R0, beta, gamma, tMax, dt) {
     let s = S0 / N;
     let i = I0 / N;
     let r = R0 / N;
+    
+    const steps = Math.round(tMax / dt) + 1;
 
-    for (let t = 0; t <= tMax; t += dt) {
+    for (let step = 0; step < steps; step++) {
+        const t = step * dt;
+        
         S.push({ x: parseFloat(t.toFixed(2)), y: parseFloat((s * N).toFixed(2)) });
         I.push({ x: parseFloat(t.toFixed(2)), y: parseFloat((i * N).toFixed(2)) });
         R.push({ x: parseFloat(t.toFixed(2)), y: parseFloat((r * N).toFixed(2)) });

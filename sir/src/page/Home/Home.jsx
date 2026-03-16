@@ -15,12 +15,14 @@ const Home = () => {
     const [isRunning, setIsRunning] = useState(false);
     const initialCountsRef = useRef({ s: 0, i: 0, r: 0 });
     const endSIRRef = useRef({S: {x: 0, y: 0}, I: {x: 0, y: 0}, R: {x: 0, y: 0}});
+    const endCARef = useRef({S: {x: 0, y: 0}, I: {x: 0, y: 0}, R: {x: 0, y: 0}});
     const [currentDay, setCurrentDay] = useState(0);
     const [grafCurrentDay, setGrafCurrentDay] = useState(0);
     const { sCount, iCount, rCount } = countCells(grid)
     if (!isRunning && currentDay === 0) {
         initialCountsRef.current = { s: sCount, i: iCount, r: rCount };
         endSIRRef.current = {S: {x: 0, y: sCount}, I: {x: 0, y: iCount}, R: {x: 0, y: rCount}}
+        endCARef.current = {S: {x: 0, y: sCount}, I: {x: 0, y: iCount}, R: {x: 0, y: rCount}}
     }
 
     useEffect(() => {

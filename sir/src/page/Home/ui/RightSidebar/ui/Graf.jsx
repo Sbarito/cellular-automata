@@ -64,7 +64,6 @@ const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setG
                 <line key={`grid-x-${index}`} x1={x} y1="50" x2={x} y2="650" stroke="#ccc" strokeWidth="1" strokeDasharray="5,5"/>
             ))}
 
-
             <line x1="50" y1="650" x2="50" y2="50" stroke="#333" strokeWidth="2" />
             <line x1="50" y1="650" x2="550" y2="650" stroke="#333" strokeWidth="2" />
 
@@ -90,9 +89,10 @@ const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setG
                 );
             })}
 
-            <path d={linePathS} fill="none" stroke="#4CAF50" strokeWidth="2.5" />
-            <path d={linePathI} fill="none" stroke="#f44336" strokeWidth="2.5" />
-            <path d={linePathR} fill="none" stroke="#01e414" strokeWidth="2.5" />
+            {/* Пунктирные линии с прозрачностью 50% */}
+            <path d={linePathS} fill="none" stroke="#4CAF50" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.5" />
+            <path d={linePathI} fill="none" stroke="#f44336" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.5" />
+            <path d={linePathR} fill="none" stroke="#01e414" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.5" />
 
             <polygon points="45,55 50,40 55,55" fill="#333"/>
             <polygon points="545,645 560,650 545,655" fill="#333"/>
