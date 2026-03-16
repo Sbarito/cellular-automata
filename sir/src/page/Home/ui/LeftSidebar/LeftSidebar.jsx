@@ -2,25 +2,34 @@ import Statistics from './ui/Statistics';
 import Parameters from './ui/Parameters';
 import Time from './ui/Time';
 
-const LeftSidebar = ({sCount, iCount, rCount, day, setDay, beta, setBeta, gamma, setGamma, endSIR}) => {
+const LeftSidebar = ({
+    sCount, 
+    iCount, 
+    rCount, 
+    day, 
+    setDay, 
+    beta, 
+    setBeta, 
+    gamma, 
+    setGamma, 
+    endSIRRef,
+    currentDay,
+    initialCountsRef,
+  grafCurrentDay}) => {
     return (
         <div style={{ 
-            width: '500px', 
-            padding: '15px',
-            backgroundColor: 'white',
-            borderRadius: '8px',
             display: 'flex',              
             flexDirection: 'column',      
-            height: 'auto',            
-            minHeight: '100%', 
-            justifyContent: 'space-between'        
+            gap: '8px'     
           }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <div style={{ fontWeight: 'bold', fontSize: '16px' }}>Настройки сетки</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', backgroundColor: 'white', padding: '15px', 
+              borderRadius: '8px', height: '100%'}}>
+              <div style={{ fontWeight: 'bold', fontSize: '16px' }}>Параметры</div>
               <Statistics 
-                sCount={sCount} 
-                iCount={iCount} 
-                rCount={rCount}  
+                title={'Вводные данные:'}
+                sCount={initialCountsRef.current.s} 
+                iCount={initialCountsRef.current.i} 
+                rCount={initialCountsRef.current.r}  
                 />
               <Parameters 
                 beta={beta}
@@ -30,13 +39,24 @@ const LeftSidebar = ({sCount, iCount, rCount, day, setDay, beta, setBeta, gamma,
               />
               <Time day={day} setDay={setDay}/>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <div style={{ fontWeight: 'bold', fontSize: '16px' }}>Прогноз болезни</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', backgroundColor: 'white', padding: '15px', 
+              borderRadius: '8px', height: '100%'}}>
+                <div style={{ fontWeight: 'bold', fontSize: '16px' }}>Итоги</div>
               <Statistics 
-                sCount={Math.floor(endSIR.S.y)} 
-                iCount={Math.floor(endSIR.I.y)} 
-                rCount={Math.floor(endSIR.R.y)}  
-                days={Math.floor(endSIR.S.x)}
+                title={'КА'}
+                sCount={sCount} 
+                iCount={iCount} 
+                rCount={rCount}  
+                day={day}
+                currentDay={currentDay}
+                />
+                <Statistics 
+                title={'SIR'}
+                sCount={Math.floor(endSIRRef.current.S.y)} 
+                iCount={Math.floor(endSIRRef.current.I.y)} 
+                rCount={Math.floor(endSIRRef.current.R.y)}  
+                day={day}
+                currentDay={grafCurrentDay}
                 />
             </div>
           </div>

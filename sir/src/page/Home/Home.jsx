@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { countCells } from './utils/countCells';
 import RightSidebar from './ui/RightSidebar/RightSidebar';
 import LeftSidebar from './ui/LeftSidebar/LeftSidebar';
 import FieldPanel from './ui/FieldPanel/FieldPanel';
 import { useEffect } from "react";
-import { simulateStep } from "./utils/simulateModule";
+import { simulateStep } from "../../shared/utils/simulateModule";
 
 const Home = () => {
     const [beta, setBeta] = useState(0.3);
@@ -13,32 +13,35 @@ const Home = () => {
     const [day, setDay] = useState(30)
     const [grid, setGrid] = useState(Array(20).fill().map(() => Array(20).fill('S')));
     const [isRunning, setIsRunning] = useState(false);
+    const initialCountsRef = useRef({ s: 0, i: 0, r: 0 });
+    const endSIRRef = useRef({S: {x: 0, y: 0}, I: {x: 0, y: 0}, R: {x: 0, y: 0}});
+    const [currentDay, setCurrentDay] = useState(0);
+    const [grafCurrentDay, setGrafCurrentDay] = useState(0);
     const { sCount, iCount, rCount } = countCells(grid)
-    const [endSIR, setEndSIR] = useState({S: {x: 0, y: 0}, I: {x: 0, y: 0}, R: {x: 0, y: 0}});
-    const [currentDay, setCurrentDay] = useState(1);
+    if (!isRunning && currentDay === 0) {
+        initialCountsRef.current = { s: sCount, i: iCount, r: rCount };
+        endSIRRef.current = {S: {x: 0, y: sCount}, I: {x: 0, y: iCount}, R: {x: 0, y: rCount}}
+    }
 
     useEffect(() => {
       if (!isRunning) return;
 
       const interval = setInterval(() => {
-
         setCurrentDay(prevDay => {
           if (prevDay >= day) {
-            setIsRunning(false);   // остановить симуляцию
+            setIsRunning(false); 
             return prevDay;
           }
-
-          setGrid(prevGrid => simulateStep(prevGrid, beta, gamma));
-
           return prevDay + 1;
         });
+
+        setGrid(prevGrid => simulateStep(prevGrid, beta, gamma));
 
       }, 500);
 
       return () => clearInterval(interval);
 
     }, [isRunning, beta, gamma, day]);
-
 
     return (<div style={{ padding: '5px 150px' }}>
         <div style={{ display: 'flex', gap: '30px', marginBottom: '20px' }}>
@@ -53,20 +56,46 @@ const Home = () => {
             setBeta={setBeta}
             gamma={gamma}
             setGamma={setGamma}
-            endSIR={endSIR}
+            endSIRRef={endSIRRef}
+            currentDay={currentDay}
+            grafCurrentDay={grafCurrentDay}
+            initialCountsRef={initialCountsRef}
             />
-          <FieldPanel gridSize={gridSize} grid={grid} isRunning={isRunning} setGrid={setGrid} setIsRunning={setIsRunning}/>
-          {/* <RightSidebar 
+          <FieldPanel 
+            gridSize={gridSize} 
+            grid={grid} 
+            isRunning={isRunning} 
+            setGrid={setGrid} 
+            setIsRunning={setIsRunning}
+            setCurrentDay={ setCurrentDay}
+            beta={beta} 
+            gamma={gamma} 
+            day={day} 
+            currentDay={currentDay}
+          />
+          <RightSidebar 
             day={day}
-            s0={sCount} 
-            i0={iCount} 
-            r0={rCount} 
+            s0={initialCountsRef.current.s} 
+            i0={initialCountsRef.current.i} 
+            r0={initialCountsRef.current.r} 
             beta={beta} 
             gamma={gamma}
             emulation={isRunning}
-            setEndSIR={setEndSIR}
-            /> */}
+            endSIRRef={endSIRRef}
+            setGrafCurrentDay={setGrafCurrentDay}
+            />
         </div>
+        
+        <div style={{ 
+          marginTop: '20px', 
+          display: 'flex', 
+          gap: '10px', 
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          
+        </div>
+
         <div style={{ marginTop: '20px' }}>
           <div>
             <strong>Как пользоваться:</strong> Нажимайте на клетки для изменения их состояния. 

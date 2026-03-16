@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { generateTicks } from "../utils/generateTicks";
 import { classicSIR } from '../../../../../shared/utils/classicSIR'
 
-const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, setEndSIR}) => {
+const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setGrafCurrentDay}) => {
     const [S, setS] = useState([]);
     const [I, setI] = useState([]);
     const [R, setR] = useState([]);
@@ -40,11 +40,12 @@ const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, setEndSIR}) => 
             setI(prev => [...prev, fullData.I[step]]);
             setR(prev => [...prev, fullData.R[step]]);
             setStep(prev => prev + 1);
-            setEndSIR({
-            S: fullData.S[step], 
-            I: fullData.I[step], 
-            R: fullData.R[step]
-        });
+            endSIRRef.current = {
+                S: fullData.S[step], 
+                I: fullData.I[step], 
+                R: fullData.R[step]
+            }
+            setGrafCurrentDay(Math.floor(endSIRRef.current.S.x))
         }, 1);
 
         return () => clearTimeout(timeout);
