@@ -2,11 +2,18 @@ import { useState, useEffect } from "react";
 import { generateTicks } from "../utils/generateTicks";
 import { classicSIR } from '../../../../../shared/utils/classicSIR'
 
-const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setGrafCurrentDay}) => {
+const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setGrafCurrentDay, reset }) => {
     const [S, setS] = useState([]);
     const [I, setI] = useState([]);
     const [R, setR] = useState([]);
     const [step, setStep] = useState(0);
+
+    useEffect(() => {
+        setS([]);
+        setI([]);
+        setR([]);
+        setStep(0);
+    }, [reset]);
 
     const fullData = emulation 
         ? classicSIR(s0, i0, r0, Number(beta), gamma, day, 0.1)
@@ -89,7 +96,6 @@ const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setG
                 );
             })}
 
-            {/* Пунктирные линии с прозрачностью 50% */}
             <path d={linePathS} fill="none" stroke="#4CAF50" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.5" />
             <path d={linePathI} fill="none" stroke="#f44336" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.5" />
             <path d={linePathR} fill="none" stroke="#01e414" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.5" />

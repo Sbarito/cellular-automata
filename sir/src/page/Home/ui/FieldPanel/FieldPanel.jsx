@@ -15,7 +15,8 @@ const FieldPanel = ({
     beta, 
     gamma, 
     day, 
-    currentDay
+    currentDay,
+    onReset
 }) => {
     const handleRun = () => {
         setIsRunning(true);
@@ -27,6 +28,7 @@ const FieldPanel = ({
         setGrid(Array(gridSize).fill().map(() => Array(gridSize).fill('S')));
         setCurrentDay(0);
         setIsRunning(false);
+        onReset(); 
     };
     const handleStep = () => {
         if (currentDay < day) {

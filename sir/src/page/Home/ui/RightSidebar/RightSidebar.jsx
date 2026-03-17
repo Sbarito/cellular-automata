@@ -1,6 +1,6 @@
 import Graf from "./ui/Graf";
 
-const RightSidebar = ({day, s0, i0, r0, beta, gamma, emulation, endSIRRef, setGrafCurrentDay}) => {
+const RightSidebar = ({day, s0, i0, r0, beta, gamma, emulation, endSIRRef, setGrafCurrentDay, reset}) => {
     return (
         <div style={{ 
             width: '100%', 
@@ -20,7 +20,18 @@ const RightSidebar = ({day, s0, i0, r0, beta, gamma, emulation, endSIRRef, setGr
                 justifyContent: 'center',
                 position: 'relative'
             }}>
-                <Graf day={day} s0={s0} i0={i0} r0={r0} beta={beta} gamma={gamma} emulation={emulation} endSIRRef={endSIRRef} setGrafCurrentDay={setGrafCurrentDay}/>
+                <Graf 
+                    day={day} 
+                    s0={s0} 
+                    i0={i0} 
+                    r0={r0} 
+                    beta={beta} 
+                    gamma={gamma} 
+                    emulation={emulation} 
+                    endSIRRef={endSIRRef} 
+                    setGrafCurrentDay={setGrafCurrentDay}
+                    reset={reset}
+                />
             </div>
         </div>
     )

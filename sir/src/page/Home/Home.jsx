@@ -10,15 +10,17 @@ const Home = () => {
     const [beta, setBeta] = useState(0.3);
     const [gamma, setGamma] = useState(0.1);
     const [gridSize, setGridSize] = useState(20);
-    const [day, setDay] = useState(30)
+    const [day, setDay] = useState(30);
     const [grid, setGrid] = useState(Array(20).fill().map(() => Array(20).fill('S')));
     const [isRunning, setIsRunning] = useState(false);
+    const [resetTrigger, setResetTrigger] = useState(0); 
     const initialCountsRef = useRef({ s: 0, i: 0, r: 0 });
     const endSIRRef = useRef({S: {x: 0, y: 0}, I: {x: 0, y: 0}, R: {x: 0, y: 0}});
     const endCARef = useRef({S: {x: 0, y: 0}, I: {x: 0, y: 0}, R: {x: 0, y: 0}});
     const [currentDay, setCurrentDay] = useState(0);
     const [grafCurrentDay, setGrafCurrentDay] = useState(0);
     const { sCount, iCount, rCount } = countCells(grid)
+    
     if (!isRunning && currentDay === 0) {
         initialCountsRef.current = { s: sCount, i: iCount, r: rCount };
         endSIRRef.current = {S: {x: 0, y: sCount}, I: {x: 0, y: iCount}, R: {x: 0, y: rCount}}
@@ -26,86 +28,96 @@ const Home = () => {
     }
 
     useEffect(() => {
-      if (!isRunning) return;
+        if (!isRunning) return;
 
-      const interval = setInterval(() => {
-        setCurrentDay(prevDay => {
-          if (prevDay >= day) {
-            setIsRunning(false); 
-            return prevDay;
-          }
-          return prevDay + 1;
-        });
+        const interval = setInterval(() => {
+            setCurrentDay(prevDay => {
+                if (prevDay >= day) {
+                    setIsRunning(false); 
+                    return prevDay;
+                }
+                return prevDay + 1;
+            });
 
-        setGrid(prevGrid => simulateStep(prevGrid, beta, gamma));
+            setGrid(prevGrid => simulateStep(prevGrid, beta, gamma));
 
-      }, 500);
+        }, 500);
 
-      return () => clearInterval(interval);
+        return () => clearInterval(interval);
 
     }, [isRunning, beta, gamma, day]);
 
+    const handleReset = () => {
+        setGrid(Array(gridSize).fill().map(() => Array(gridSize).fill('S')));
+        setCurrentDay(0);
+        setIsRunning(false);
+        setResetTrigger(prev => prev + 1);
+    };
+
     return (<div style={{ padding: '5px 150px' }}>
         <div style={{ display: 'flex', gap: '30px', marginBottom: '20px' }}>
-          <LeftSidebar 
-            sCount={sCount} 
-            iCount={iCount} 
-            rCount={rCount} 
-            setIsRunning={setIsRunning}
-            day={day}
-            setDay={setDay}
-            beta={beta}
-            setBeta={setBeta}
-            gamma={gamma}
-            setGamma={setGamma}
-            endSIRRef={endSIRRef}
-            currentDay={currentDay}
-            grafCurrentDay={grafCurrentDay}
-            initialCountsRef={initialCountsRef}
+            <LeftSidebar 
+                sCount={sCount} 
+                iCount={iCount} 
+                rCount={rCount} 
+                setIsRunning={setIsRunning}
+                day={day}
+                setDay={setDay}
+                beta={beta}
+                setBeta={setBeta}
+                gamma={gamma}
+                setGamma={setGamma}
+                endSIRRef={endSIRRef}
+                currentDay={currentDay}
+                grafCurrentDay={grafCurrentDay}
+                initialCountsRef={initialCountsRef}
             />
-          <FieldPanel 
-            gridSize={gridSize} 
-            grid={grid} 
-            isRunning={isRunning} 
-            setGrid={setGrid} 
-            setIsRunning={setIsRunning}
-            setCurrentDay={ setCurrentDay}
-            beta={beta} 
-            gamma={gamma} 
-            day={day} 
-            currentDay={currentDay}
-          />
-          <RightSidebar 
-            day={day}
-            s0={initialCountsRef.current.s} 
-            i0={initialCountsRef.current.i} 
-            r0={initialCountsRef.current.r} 
-            beta={beta} 
-            gamma={gamma}
-            emulation={isRunning}
-            endSIRRef={endSIRRef}
-            setGrafCurrentDay={setGrafCurrentDay}
+            <FieldPanel 
+                gridSize={gridSize} 
+                grid={grid} 
+                isRunning={isRunning} 
+                setGrid={setGrid} 
+                setIsRunning={setIsRunning}
+                setCurrentDay={setCurrentDay}
+                beta={beta} 
+                gamma={gamma} 
+                day={day} 
+                currentDay={currentDay}
+                onReset={handleReset} 
+            />
+            <RightSidebar 
+                day={day}
+                s0={initialCountsRef.current.s} 
+                i0={initialCountsRef.current.i} 
+                r0={initialCountsRef.current.r} 
+                beta={beta} 
+                gamma={gamma}
+                emulation={isRunning}
+                endSIRRef={endSIRRef}
+                setGrafCurrentDay={setGrafCurrentDay}
+                reset={resetTrigger} 
             />
         </div>
         
         <div style={{ 
-          marginTop: '20px', 
-          display: 'flex', 
-          gap: '10px', 
-          alignItems: 'center',
-          justifyContent: 'center'
+            marginTop: '20px', 
+            display: 'flex', 
+            gap: '10px', 
+            alignItems: 'center',
+            justifyContent: 'center'
         }}>
           
         </div>
 
         <div style={{ marginTop: '20px' }}>
-          <div>
-            <strong>Как пользоваться:</strong> Нажимайте на клетки для изменения их состояния. 
-            При первом клике клетка становится I (инфицированной), при втором - R (выздоровевшей), 
-            при третьем - снова S (восприимчивой).
-          </div>
+            <div>
+                <strong>Как пользоваться:</strong> Нажимайте на клетки для изменения их состояния. 
+                При первом клике клетка становится I (инфицированной), при втором - R (выздоровевшей), 
+                при третьем - снова S (восприимчивой).
+            </div>
         </div>
-      </div>);
+    </div>);
 }
+
 
 export default Home
