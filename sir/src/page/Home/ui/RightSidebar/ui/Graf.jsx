@@ -2,18 +2,64 @@ import { useState, useEffect } from "react";
 import { generateTicks } from "../utils/generateTicks";
 import { classicSIR } from '../../../../../shared/utils/classicSIR'
 
-const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setGrafCurrentDay, reset }) => {
+const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setGrafCurrentDay, reset, gridData }) => {
     const [S, setS] = useState([]);
     const [I, setI] = useState([]);
     const [R, setR] = useState([]);
     const [step, setStep] = useState(0);
+    
+    const [fieldS, setFieldS] = useState([]);
+    const [fieldI, setFieldI] = useState([]);
+    const [fieldR, setFieldR] = useState([]);
 
     useEffect(() => {
         setS([]);
         setI([]);
         setR([]);
+        setFieldS([]);
+        setFieldI([]);
+        setFieldR([]);
         setStep(0);
     }, [reset]);
+
+    useEffect(() => {
+        if (gridData && gridData.currentDay !== undefined) {
+            const day_num = gridData.currentDay;
+            
+            setFieldS(prev => {
+                const newPoint = { x: day_num, y: gridData.sCount };
+                const existingIndex = prev.findIndex(p => p.x === day_num);
+                if (existingIndex >= 0) {
+                    const updated = [...prev];
+                    updated[existingIndex] = newPoint;
+                    return updated;
+                }
+                return [...prev, newPoint];
+            });
+
+            setFieldI(prev => {
+                const newPoint = { x: day_num, y: gridData.iCount };
+                const existingIndex = prev.findIndex(p => p.x === day_num);
+                if (existingIndex >= 0) {
+                    const updated = [...prev];
+                    updated[existingIndex] = newPoint;
+                    return updated;
+                }
+                return [...prev, newPoint];
+            });
+
+            setFieldR(prev => {
+                const newPoint = { x: day_num, y: gridData.rCount };
+                const existingIndex = prev.findIndex(p => p.x === day_num);
+                if (existingIndex >= 0) {
+                    const updated = [...prev];
+                    updated[existingIndex] = newPoint;
+                    return updated;
+                }
+                return [...prev, newPoint];
+            });
+        }
+    }, [gridData]);
 
     const fullData = emulation 
         ? classicSIR(s0, i0, r0, Number(beta), gamma, day, 0.1)
@@ -31,7 +77,8 @@ const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setG
 
     const getLinePath = (points) => {
         if (points.length < 2) return '';
-        return points.map((point, index) => {
+        const sortedPoints = [...points].sort((a, b) => a.x - b.x);
+        return sortedPoints.map((point, index) => {
             const x = getXCoordinate(point.x);
             const y = getYCoordinate(point.y);
             return index === 0 ? `M ${x} ${y}` : `L ${x} ${y}`;
@@ -61,6 +108,10 @@ const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setG
     const linePathS = getLinePath(S);
     const linePathI = getLinePath(I);
     const linePathR = getLinePath(R);
+    
+    const fieldLinePathS = getLinePath(fieldS);
+    const fieldLinePathI = getLinePath(fieldI);
+    const fieldLinePathR = getLinePath(fieldR);
 
     return (
         <svg width="100%" height="700" viewBox="0 0 600 700" style={{ maxWidth: '100%' }}>
@@ -96,15 +147,21 @@ const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setG
                 );
             })}
 
-            <path d={linePathS} fill="none" stroke="#4CAF50" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.5" />
-            <path d={linePathI} fill="none" stroke="#f44336" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.5" />
-            <path d={linePathR} fill="none" stroke="#01e414" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.5" />
+            <path d={linePathS} fill="none" stroke="#4CAF50" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.2" />
+            <path d={linePathI} fill="none" stroke="#f44336" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.2" />
+            <path d={linePathR} fill="none" stroke="#01e414" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.2" />
+
+            <path d={fieldLinePathS} fill="none" stroke="#4CAF50" strokeWidth="2.5" opacity="1" />
+            <path d={fieldLinePathI} fill="none" stroke="#f44336" strokeWidth="2.5" opacity="1" />
+            <path d={fieldLinePathR} fill="none" stroke="#01e414" strokeWidth="2.5" opacity="1" />
 
             <polygon points="45,55 50,40 55,55" fill="#333"/>
             <polygon points="545,645 560,650 545,655" fill="#333"/>
 
             <text x="10" y="58" fontSize="14" fill="#333">S,I,R</text>
             <text x="550" y="666" fontSize="14" fill="#333">t</text>
+
+            
         </svg>
     );
 };

@@ -21,6 +21,22 @@ const Home = () => {
     const [grafCurrentDay, setGrafCurrentDay] = useState(0);
     const { sCount, iCount, rCount } = countCells(grid)
     
+    const [gridData, setGridData] = useState({
+        currentDay: 0,
+        sCount: 0,
+        iCount: 0,
+        rCount: 0
+    });
+
+    useEffect(() => {
+        setGridData({
+            currentDay: currentDay,
+            sCount: sCount,
+            iCount: iCount,
+            rCount: rCount
+        });
+    }, [currentDay, sCount, iCount, rCount]);
+    
     if (!isRunning && currentDay === 0) {
         initialCountsRef.current = { s: sCount, i: iCount, r: rCount };
         endSIRRef.current = {S: {x: 0, y: sCount}, I: {x: 0, y: iCount}, R: {x: 0, y: rCount}}
@@ -95,7 +111,8 @@ const Home = () => {
                 emulation={isRunning}
                 endSIRRef={endSIRRef}
                 setGrafCurrentDay={setGrafCurrentDay}
-                reset={resetTrigger} 
+                reset={resetTrigger}
+                gridData={gridData}
             />
         </div>
         
@@ -119,5 +136,4 @@ const Home = () => {
     </div>);
 }
 
-
-export default Home
+export default Home;

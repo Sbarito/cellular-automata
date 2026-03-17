@@ -36,6 +36,8 @@ const FieldPanel = ({
             setCurrentDay(prev => prev + 1);
         }
     };
+    const isLastDayReached = currentDay >= day;
+ 
     return (
         <div style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column'}}>
             <TitleToField/>
@@ -58,7 +60,8 @@ const FieldPanel = ({
                 <Button 
                  text={!isNaN(day)? `Шаг ${currentDay}/${day}`: 'Шаг'}
                  onClick={handleStep}
-                 disabled={isRunning && (currentDay < day)}
+                 
+                 disabled={(isRunning && currentDay < day) || isLastDayReached}
                  colorButton={'#01e414'} 
                  colorButtonHover={'#00dd12'}
                 />
