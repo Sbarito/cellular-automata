@@ -20,7 +20,7 @@ const Field = ({gridSize, grid, isRunning, setGrid}) => {
       switch(value) {
         case 'S': return '#4CAF50'; 
         case 'I': return '#f44336'; 
-        case 'R': return '#01e414';
+        case 'R': return '#fbff00';
         default: return '#fff';
       }
     };
@@ -28,8 +28,7 @@ const Field = ({gridSize, grid, isRunning, setGrid}) => {
         <div 
               style={{ 
                 display: 'grid', 
-                gridTemplateColumns: `repeat(${gridSize}, 30px)`,
-                gap: '1px',
+                gridTemplateColumns: `repeat(${gridSize}, 31px)`,
                 backgroundColor: '#ccc',
                 padding: '1px',
                 width: 'fit-content'
@@ -41,8 +40,8 @@ const Field = ({gridSize, grid, isRunning, setGrid}) => {
                     key={`${rowIndex}-${colIndex}`}
                     onClick={() => handleCellClick(rowIndex, colIndex)}
                     style={{
-                      width: '30px',
-                      height: '30px',
+                      width: '31px',
+                      height: '31px',
                       backgroundColor: getCellColor(cell),
                       cursor: isRunning ? 'not-allowed' : 'pointer',
                       border: '1px solid rgba(0,0,0,0.1)',
