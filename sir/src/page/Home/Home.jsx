@@ -9,8 +9,10 @@ import { simulateStep } from "../../shared/utils/simulateModule";
 const Home = () => {
     const [beta, setBeta] = useState(0.3);
     const [gamma, setGamma] = useState(0.1);
-    const [gridSize, setGridSize] = useState(40);
+    const [gridSize, setGridSize] = useState(20);
     const [day, setDay] = useState(30);
+    const [floor, setFloor] = useState(30);
+    const [room, setRoom] = useState(30);
     const [grid, setGrid] = useState(Array(gridSize).fill().map(() => Array(gridSize).fill('S')));
     const [isRunning, setIsRunning] = useState(false);
     const [resetTrigger, setResetTrigger] = useState(0); 
@@ -87,6 +89,10 @@ const Home = () => {
                 currentDay={currentDay}
                 grafCurrentDay={grafCurrentDay}
                 initialCountsRef={initialCountsRef}
+                floor={floor}
+                setFloor={setFloor}
+                room={room}
+                setRoom={setRoom}
             />
             <FieldPanel 
                 gridSize={gridSize} 

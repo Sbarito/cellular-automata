@@ -15,6 +15,10 @@ const LeftSidebar = ({
     endSIRRef,
     currentDay,
     initialCountsRef,
+    floor,
+    room,
+    setRoom,
+    setFloor,
   grafCurrentDay}) => {
     return (
         <div style={{ 
@@ -36,6 +40,10 @@ const LeftSidebar = ({
                 setBeta={setBeta}
                 gamma={gamma}
                 setGamma={setGamma}
+                floor={floor}
+                setFloor={setFloor}
+                room={room}
+                setRoom={setRoom}
               />
               <Time day={day} setDay={setDay}/>
             </div>

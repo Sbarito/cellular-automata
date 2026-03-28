@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const Parameters = ({beta, setBeta, gamma, setGamma}) => {
+const Parameters = ({beta, setBeta, gamma, setGamma, floor, setFloor, room, setRoom}) => {
     const [selectedDisease, setSelectedDisease] = useState('flu');
     const [r0, setR0] = useState(3);
     const [customMode, setCustomMode] = useState(false);
@@ -55,6 +55,16 @@ const Parameters = ({beta, setBeta, gamma, setGamma}) => {
         if (!isNaN(numValue)) {
             setBeta(numValue);
         }
+    };
+
+    const handleFloorChange = (e) => {
+        const value = e.target.value;
+        setFloor(e.target.value)
+    };
+
+    const handleRoomChange = (e) => {
+        const value = e.target.value;
+        setRoom(e.target.value)
     };
 
     const handleGammaChange = (e) => {
@@ -125,46 +135,8 @@ const Parameters = ({beta, setBeta, gamma, setGamma}) => {
                         настроить самому
                     </label>
                 </div>
-                
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent:'space-between' }}>
-                    <label htmlFor="beta" style={{ minWidth: '60px', fontSize: '14px' }}>β (beta):</label>
-                    <input
-                        id="beta"
-                        value={beta}
-                        onChange={handleBetaChange}
-                        disabled={!customMode}
-                        style={{
-                            width: '60px',
-                            padding: '6px',
-                            border: '1px solid #ccc',
-                            borderRadius: '4px',
-                            fontSize: '14px',
-                            backgroundColor: !customMode ? '#e9e9e9' : 'white',
-                            opacity: !customMode ? 0.7 : 1
-                        }}
-                    />
-                </div>
-                
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent:'space-between' }}>
-                    <label htmlFor="gamma" style={{ minWidth: '60px', fontSize: '14px' }}>γ (gamma):</label>
-                    <input
-                        id="gamma"
-                        value={gamma}
-                        onChange={handleGammaChange}
-                        disabled={!customMode}
-                        style={{
-                            width: '60px',
-                            padding: '6px',
-                            border: '1px solid #ccc',
-                            borderRadius: '4px',
-                            fontSize: '14px',
-                            backgroundColor: !customMode ? '#e9e9e9' : 'white',
-                            opacity: !customMode ? 0.7 : 1
-                        }}
-                    />
-                </div>
-                
-                <div style={{ 
+
+                 <div style={{ 
                     marginTop: '10px',
                     padding: '8px',
                     backgroundColor: '#e3f2fd',
@@ -175,24 +147,111 @@ const Parameters = ({beta, setBeta, gamma, setGamma}) => {
                 }}>
                     R₀ = {beta} / {gamma} = {r0}
                 </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent:'space-between' }}>
-                    <label htmlFor="r0" style={{ minWidth: '60px', fontSize: '14px' }}>R0:</label>
-                    <input
-                        id="r0"
-                        value={r0}
-                        disabled={true}
-                        style={{
-                            width: '60px',
-                            padding: '6px',
-                            border: '1px solid #ccc',
-                            borderRadius: '4px',
-                            fontSize: '14px',
-                            backgroundColor:  'white',
-                            opacity:  1
-                        }}
-                    />
+                
+                <div  style={{ display: 'flex', gap: '10px'}}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <label htmlFor="beta" style={{fontSize: '14px' }}>β:</label>
+                        <input
+                            id="beta"
+                            value={beta}
+                            onChange={handleBetaChange}
+                            disabled={!customMode}
+                            style={{
+                                width: '60px',
+                                padding: '6px',
+                                border: '1px solid #ccc',
+                                borderRadius: '4px',
+                                fontSize: '14px',
+                                backgroundColor: !customMode ? '#e9e9e9' : 'white',
+                                opacity: !customMode ? 0.7 : 1
+                            }}
+                        />
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px'}}>
+                        <label htmlFor="gamma" style={{  fontSize: '14px' }}>γ:</label>
+                        <input
+                            id="gamma"
+                            value={gamma}
+                            onChange={handleGammaChange}
+                            disabled={!customMode}
+                            style={{
+                                width: '60px',
+                                padding: '6px',
+                                border: '1px solid #ccc',
+                                borderRadius: '4px',
+                                fontSize: '14px',
+                                backgroundColor: !customMode ? '#e9e9e9' : 'white',
+                                opacity: !customMode ? 0.7 : 1
+                            }}
+                        />
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px'}}>
+                        <label htmlFor="r0" style={{  fontSize: '14px' }}>R0:</label>
+                        <input
+                            id="r0"
+                            value={r0}
+                            disabled={true}
+                            style={{
+                                width: '60px',
+                                padding: '6px',
+                                border: '1px solid #ccc',
+                                borderRadius: '4px',
+                                fontSize: '14px',
+                                backgroundColor:  '#e9e9e9',
+                                opacity:  0.7
+                            }}
+                        />
+                    </div>
                 </div>
+            
+
+                <div  style={{ display: 'flex', gap: '10px'}}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <label htmlFor="floor" style={{fontSize: '14px' }}>кол-во этажей:</label>
+                        <input
+                            id="floor"
+                            type='number'
+                            step="1"
+                            min="1"
+                            max="10000"
+                            value={floor}
+                            onChange={handleFloorChange}
+                            style={{
+                                width: '60px',
+                                padding: '6px',
+                                border: '1px solid #ccc',
+                                borderRadius: '4px',
+                                fontSize: '14px',
+                                backgroundColor: 'white',
+                                opacity:  1
+                            }}
+                        />
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px'}}>
+                        <label htmlFor="room" style={{  fontSize: '14px' }}>кол-во комнат:</label>
+                        <input
+                            id="room"
+                            type='number'
+                            step="1"
+                            min="1"
+                            max="10000"
+                            value={room}
+                            onChange={handleRoomChange}
+                            style={{
+                                width: '60px',
+                                padding: '6px',
+                                border: '1px solid #ccc',
+                                borderRadius: '4px',
+                                fontSize: '14px',
+                                backgroundColor: 'white',
+                                opacity:  1
+                            }}
+                        />
+                    </div>
+                    
+                </div>
+
+                
             </div>
         </div>
     );
