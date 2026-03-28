@@ -1,6 +1,6 @@
 import Graf from "./ui/Graf";
 
-const RightSidebar = ({day, s0, i0, r0, beta, gamma, emulation, endSIRRef, setGrafCurrentDay, reset, gridData}) => {
+const RightSidebar = ({day, s0, i0, r0, beta, gamma, emulation, endSIRRef, setGrafCurrentDay, reset, gridData, gridSize}) => {
     return (
         <div style={{ 
             width: '100%', 
@@ -32,6 +32,7 @@ const RightSidebar = ({day, s0, i0, r0, beta, gamma, emulation, endSIRRef, setGr
                     setGrafCurrentDay={setGrafCurrentDay}
                     reset={reset}
                     gridData={gridData}
+                    gridSize={gridSize}
                 />
             </div>
         </div>

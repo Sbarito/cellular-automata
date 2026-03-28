@@ -9,9 +9,9 @@ import { simulateStep } from "../../shared/utils/simulateModule";
 const Home = () => {
     const [beta, setBeta] = useState(0.3);
     const [gamma, setGamma] = useState(0.1);
-    const [gridSize, setGridSize] = useState(20);
+    const [gridSize, setGridSize] = useState(40);
     const [day, setDay] = useState(30);
-    const [grid, setGrid] = useState(Array(20).fill().map(() => Array(20).fill('S')));
+    const [grid, setGrid] = useState(Array(gridSize).fill().map(() => Array(gridSize).fill('S')));
     const [isRunning, setIsRunning] = useState(false);
     const [resetTrigger, setResetTrigger] = useState(0); 
     const initialCountsRef = useRef({ s: 0, i: 0, r: 0 });
@@ -113,6 +113,7 @@ const Home = () => {
                 setGrafCurrentDay={setGrafCurrentDay}
                 reset={resetTrigger}
                 gridData={gridData}
+                gridSize={gridSize}
             />
         </div>
         

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { generateTicks } from "../utils/generateTicks";
 import { classicSIR } from '../../../../../shared/utils/classicSIR'
 
-const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setGrafCurrentDay, reset, gridData }) => {
+const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setGrafCurrentDay, reset, gridData, gridSize }) => {
     const [S, setS] = useState([]);
     const [I, setI] = useState([]);
     const [R, setR] = useState([]);
@@ -65,7 +65,7 @@ const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setG
         ? classicSIR(s0, i0, r0, Number(beta), gamma, day, 0.1)
         : { S: [], I: [], R: [] };
 
-    const maxY = 400;
+    const maxY = gridSize*gridSize;
     const maxX = day;
     const yTicks = generateTicks(maxY);
     const xTicks = generateTicks(maxX);
