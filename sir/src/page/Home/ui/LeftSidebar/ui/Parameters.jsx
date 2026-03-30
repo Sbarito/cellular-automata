@@ -203,53 +203,6 @@ const Parameters = ({beta, setBeta, gamma, setGamma, floor, setFloor, room, setR
                         />
                     </div>
                 </div>
-            
-
-                <div  style={{ display: 'flex', gap: '10px'}}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <label htmlFor="floor" style={{fontSize: '14px' }}>кол-во этажей:</label>
-                        <input
-                            id="floor"
-                            type='number'
-                            step="1"
-                            min="1"
-                            max="10000"
-                            value={floor}
-                            onChange={handleFloorChange}
-                            style={{
-                                width: '60px',
-                                padding: '6px',
-                                border: '1px solid #ccc',
-                                borderRadius: '4px',
-                                fontSize: '14px',
-                                backgroundColor: 'white',
-                                opacity:  1
-                            }}
-                        />
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px'}}>
-                        <label htmlFor="room" style={{  fontSize: '14px' }}>кол-во комнат:</label>
-                        <input
-                            id="room"
-                            type='number'
-                            step="1"
-                            min="1"
-                            max="10000"
-                            value={room}
-                            onChange={handleRoomChange}
-                            style={{
-                                width: '60px',
-                                padding: '6px',
-                                border: '1px solid #ccc',
-                                borderRadius: '4px',
-                                fontSize: '14px',
-                                backgroundColor: 'white',
-                                opacity:  1
-                            }}
-                        />
-                    </div>
-                    
-                </div>
 
                 
             </div>

@@ -10,9 +10,8 @@ const Home = () => {
     const [beta, setBeta] = useState(0.3);
     const [gamma, setGamma] = useState(0.1);
     const [gridSize, setGridSize] = useState(20);
+    const [gridHouse, setGridHouse] = useState(400);
     const [day, setDay] = useState(30);
-    const [floor, setFloor] = useState(30);
-    const [room, setRoom] = useState(30);
     const [grid, setGrid] = useState(Array(gridSize).fill().map(() => Array(gridSize).fill('S')));
     const [isRunning, setIsRunning] = useState(false);
     const [resetTrigger, setResetTrigger] = useState(0); 
@@ -29,6 +28,10 @@ const Home = () => {
         iCount: 0,
         rCount: 0
     });
+
+    useEffect(() => {
+        setGridHouse(sCount + iCount + rCount);
+    }, [sCount, iCount, rCount]);
 
     useEffect(() => {
         setGridData({
@@ -65,12 +68,6 @@ const Home = () => {
 
     }, [isRunning, beta, gamma, day]);
 
-    const handleReset = () => {
-        setGrid(Array(gridSize).fill().map(() => Array(gridSize).fill('S')));
-        setCurrentDay(0);
-        setIsRunning(false);
-        setResetTrigger(prev => prev + 1);
-    };
 
     return (<div style={{ padding: '5px 150px' }}>
         <div style={{ display: 'flex', gap: '30px', marginBottom: '20px' }}>
@@ -89,10 +86,11 @@ const Home = () => {
                 currentDay={currentDay}
                 grafCurrentDay={grafCurrentDay}
                 initialCountsRef={initialCountsRef}
-                floor={floor}
-                setFloor={setFloor}
-                room={room}
-                setRoom={setRoom}
+                 gridSize={ gridSize}
+                 setGrid={setGrid}
+                 setGridSize={setGridSize}
+                 gridHouse={gridHouse} 
+                 setGridHouse={setGridHouse}
             />
             <FieldPanel 
                 gridSize={gridSize} 
@@ -105,7 +103,8 @@ const Home = () => {
                 gamma={gamma} 
                 day={day} 
                 currentDay={currentDay}
-                onReset={handleReset} 
+                gridHouse={gridHouse}
+                setResetTrigger={setResetTrigger}
             />
             <RightSidebar 
                 day={day}

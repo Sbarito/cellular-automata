@@ -15,11 +15,12 @@ const LeftSidebar = ({
     endSIRRef,
     currentDay,
     initialCountsRef,
-    floor,
-    room,
-    setRoom,
-    setFloor,
-  grafCurrentDay}) => {
+     setGridSize,
+    gridSize,
+  grafCurrentDay,
+  gridHouse, 
+  setGridHouse,
+setGrid}) => {
     return (
         <div style={{ 
             display: 'flex',              
@@ -40,12 +41,12 @@ const LeftSidebar = ({
                 setBeta={setBeta}
                 gamma={gamma}
                 setGamma={setGamma}
-                floor={floor}
-                setFloor={setFloor}
-                room={room}
-                setRoom={setRoom}
+                
               />
-              <Time day={day} setDay={setDay}/>
+              <Time day={day} setDay={setDay} gridSize={gridSize}
+                 setGridSize={setGridSize} setGrid={setGrid}  gridHouse={gridHouse} 
+                 setGridHouse={setGridHouse}
+           />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', backgroundColor: 'white', padding: '15px', 
               borderRadius: '8px', height: '100%'}}>

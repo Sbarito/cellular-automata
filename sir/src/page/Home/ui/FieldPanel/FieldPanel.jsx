@@ -7,6 +7,7 @@ import { simulateStep } from "../../../../shared/utils/simulateModule"
 
 const FieldPanel = ({
     gridSize, 
+    gridHouse,
     grid, 
     isRunning, 
     setGrid, 
@@ -16,19 +17,47 @@ const FieldPanel = ({
     gamma, 
     day, 
     currentDay,
-    onReset
+    setResetTrigger
 }) => {
+    
     const handleRun = () => {
         setIsRunning(true);
     };
     const handleStop = () => {
         setIsRunning(false);
     };
+    const generateGrid = (gridHouse, gridSize) => {
+        // Создаем пустую сетку
+        const newGrid = Array(gridSize).fill().map(() => Array(gridSize).fill('S'));
+        
+        const totalCellsInSquare = gridSize * gridSize;
+        const extraCells = totalCellsInSquare - gridHouse;
+        
+        if (extraCells > 0) {
+            let remaining = extraCells;
+            
+            // Заполняем disabled клетки ТОЧНО КАК В ОРИГИНАЛЕ
+            // Сначала заполняем последнюю строку
+            for (let j = gridSize - 1; j >= 0 && remaining > 0; j--) {
+                newGrid[gridSize - 1][j] = 'disabled';
+                remaining--;
+            }
+
+            // Затем заполняем последний столбец (начиная с предпоследней строки)
+            for (let i = gridSize - 2; i >= 0 && remaining > 0; i--) {
+                newGrid[i][gridSize - 1] = 'disabled';
+                remaining--;
+            }
+        }
+        
+        return newGrid;
+    };
     const handleReset = () => {
-        setGrid(Array(gridSize).fill().map(() => Array(gridSize).fill('S')));
+        const newGrid = generateGrid(gridHouse, gridSize);
+        setGrid(newGrid)
         setCurrentDay(0);
         setIsRunning(false);
-        onReset(); 
+        setResetTrigger(prev => prev + 1);
     };
     const handleStep = () => {
         if (currentDay < day) {
@@ -81,7 +110,7 @@ const FieldPanel = ({
                />
                <Button 
                 text={'Random'}
-                onClick={() => handleGenerate(isRunning, gridSize, setGrid)} 
+                onClick={() => handleGenerate(isRunning, gridSize, setGrid,  grid)} 
                 disabled={isRunning}
                 colorButton={'#ffe600'} 
                 colorButtonHover={'#f5dc00'}

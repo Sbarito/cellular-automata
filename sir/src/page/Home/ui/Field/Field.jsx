@@ -7,7 +7,8 @@ const Field = ({ gridSize, grid, isRunning, setGrid }) => {
 
     if (currentValue === 'S') newGrid[rowIndex][colIndex] = 'I';
     else if (currentValue === 'I') newGrid[rowIndex][colIndex] = 'R';
-    else if (currentValue === 'R') newGrid[rowIndex][colIndex] = 'S';
+    else if (currentValue === 'R') newGrid[rowIndex][colIndex] = 'disabled';
+    else if (currentValue === 'disabled') newGrid[rowIndex][colIndex] = 'S'; 
 
     setGrid(newGrid);
   };
@@ -17,6 +18,7 @@ const Field = ({ gridSize, grid, isRunning, setGrid }) => {
       case 'S': return '#4CAF50';
       case 'I': return '#f44336';
       case 'R': return '#fbff00';
+      case 'disabled': return '#a7a7a7';
       default: return '#fff';
     }
   };
