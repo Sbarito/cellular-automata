@@ -147,9 +147,9 @@ const Graf = ({ day, s0, i0, r0, beta, gamma, emulation = false, endSIRRef, setG
                 );
             })}
 
-            <path d={linePathS} fill="none" stroke="#4CAF50" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.2" />
-            <path d={linePathI} fill="none" stroke="#f44336" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.2" />
-            <path d={linePathR} fill="none" stroke="#fbff00" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.2" />
+            <path d={linePathS} fill="none" stroke="#4CAF50" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.5" />
+            <path d={linePathI} fill="none" stroke="#f44336" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.5" />
+            <path d={linePathR} fill="none" stroke="#fbff00" strokeWidth="2.5" strokeDasharray="5,3" opacity="0.5" />
 
             <path d={fieldLinePathS} fill="none" stroke="#4CAF50" strokeWidth="2.5" opacity="1" />
             <path d={fieldLinePathI} fill="none" stroke="#f44336" strokeWidth="2.5" opacity="1" />
